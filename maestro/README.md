@@ -8,15 +8,22 @@ the **Incident Review Board via Action Center (HITL)**; the rest take the
 **Fast-Track autonomous** path.
 
 ```
-Field Incident Captured
-  → AI Triage & Risk Score        (service)
+Field Incident Captured              (e.g. Solomon SolVision defect FAIL)
+  → AI Triage & Risk Score           (service — agents/analyst_agent.py)
   → Reproduce Incident
   → Analyze Root Cause
   → Incident Review
-  → ◇ HITL Required?              (exclusive gateway on Incident.hitlRequired)
+  → Impact Analysis                  (service — agents/impact_agent.py)
+        economic (repair + downtime + inaction risk) + organizational
+        (rolesEngaged / orgScope / safetyCritical) -> hitlRequired
+  → ◇ HITL Required?                 (routes on IMPACT, not risk alone)
         ├─ true  → Escalate to Review Board (Action Center)  → Escalated
         └─ else  → Fast-Track Auto-Resolve                   → Auto-Resolved
 ```
+
+Routing rule: `hitlRequired = analyst-flagged OR economicImpactScore ≥ 0.40 OR
+safetyCritical OR orgScope = FLEET_WIDE`. A costly / safety-critical / fleet-wide
+defect escalates to a human review board; a cheap, contained one auto-resolves.
 
 This is the Physical AI framing of Figure 12 (CM II Based ECM), Change Trigger
 swimlane. Source figure: `docs/figure12-source/`.
