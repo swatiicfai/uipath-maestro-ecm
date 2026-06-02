@@ -1,0 +1,14 @@
+# Core pipeline runs with the standard library only (offline rule-based fallback).
+# Install these to enable the LLM task nodes and the mock enterprise API.
+
+# LLM task nodes (optional — pipeline degrades gracefully without them)
+anthropic>=0.39.0          # primary provider (Claude)
+google-generativeai>=0.8.0 # fallback provider (Gemini)
+
+# Mock enterprise API
+fastapi>=0.110.0
+uvicorn>=0.29.0
+pydantic>=2.6.0
+
+# Tests
+pytest>=8.0.0

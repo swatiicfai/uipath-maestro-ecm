@@ -85,6 +85,20 @@ PY
 
 See [`samples/triggers/`](./samples/triggers/) for the `IncidentReport` schema + 4 robotics source samples (vision / ERP / manual / supplier) that let you replay the flow without external systems.
 
+### Run the orchestration end-to-end
+
+The same stages the Maestro BPMN models also run as plain Python task nodes, so the flow is runnable and testable with **zero external dependencies** — the LLM and enterprise systems degrade to local fallbacks when no keys are set:
+
+```bash
+python run_pipeline.py            # trigger -> analyst agent -> gateway -> action -> audit
+python tests/test_pipeline.py     # offline end-to-end tests
+```
+
+Each incident is classified by the **Vision AI Analyst** agent ([`agents/`](./agents/)), scored by the Safety Risk gateway, routed to the **Action Center (HITL)** or the autonomous **Fast Track**, then ticketed against the **mock enterprise API** ([`mocks/`](./mocks/)) with an immutable audit entry at every stage.
+
+- **LLM task node** — set `ANTHROPIC_API_KEY` (Claude, primary) or `GEMINI_API_KEY` (fallback) and `pip install -r requirements.txt`. With no key, a deterministic rule layer mirrors the BPMN gateway math so the pipeline still runs.
+- **Mock enterprise API** — `uvicorn mocks.enterprise_api:app --port 8099` for live HTTP endpoints (QA tickets / CRM / audit log).
+
 ## Community
 
 Building this in the open — join the team chat on Discord: https://discord.gg/ntXbNbvN95
