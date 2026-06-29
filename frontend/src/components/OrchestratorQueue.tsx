@@ -3,11 +3,9 @@ import { RefreshCw, Server, Folder, Globe } from 'lucide-react';
 
 const OrchestratorQueue: React.FC = () => {
   const [queueItems, setQueueItems] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isPushing, setIsPushing] = useState(false);
 
   const fetchQueue = async () => {
-    setIsLoading(true);
     try {
       const res = await fetch('/api/queue');
       const data = await res.json();
@@ -15,7 +13,6 @@ const OrchestratorQueue: React.FC = () => {
     } catch (e) {
       console.error(e);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {

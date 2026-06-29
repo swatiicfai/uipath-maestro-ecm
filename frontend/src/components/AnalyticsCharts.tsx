@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 
 const COLORS = ['#10B981', '#F59E0B', '#EF4444'];
 
@@ -31,7 +31,7 @@ const AnalyticsCharts: React.FC = () => {
                 paddingAngle={5}
                 dataKey="value"
               >
-                {data.risk_distribution.map((entry: any, index: number) => (
+                {data.risk_distribution.map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
