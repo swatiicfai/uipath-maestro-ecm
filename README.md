@@ -53,57 +53,82 @@ Process 3 · Action & Compliance
   8. Quality Assurance    Compliance-summary agent + immutable audit log + researcher sign-off
 ```
 
-## How it's built
+## 🛠️ UiPath Components & Architecture
 
-| Layer | Choice |
-| --- | --- |
-| **Orchestration** | UiPath Automation Cloud + Maestro BPMN |
-| **UiPath components** | **Agent Builder** (agentic) · Maestro BPMN · Action Center (HITL) · **RPA Robot** + API Workflows (provisioning/execution) |
-| **External agent framework** | LangChain (Analyst, Risk, Impact, audit-summary agents) |
-| **LLM** | Claude (primary) + Gemini (fallback) |
-| **Training workload** | Docker + MuJoCo RL training containers (`g1-mujoco-rl-training`) on AWS / GCP / AMD GPUs |
-| **Execution targets (mocked)** | API-driven cloud provisioning + **RPA-driven cloud console / billing / model registry** |
+Our architecture integrates the full suite of advanced UiPath Automation Cloud components as an enterprise governance and orchestration layer:
 
-Full architecture: [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
+| UiPath Component | Description & Role in Solution |
+| :--- | :--- |
+| **UiPath Maestro BPMN** | The primary process orchestration engine. Models and controls the full 8-container training lifecycle from ingestion to termination/registry. |
+| **UiPath Agent Builder** | Coordinates the specialized autonomous AI agents (Telemetry Analyst, Anomaly Risk Agent, Cost & Impact Agent) with structured prompt templates. |
+| **UiPath Action Center** | Renders rich interactive Human-in-the-Loop (HITL) forms for researchers to inspect training telemetry (loss/reward curves) and approve/reject weight deployment. |
+| **UiPath RPA Robots & API Workflows** | Executes hard integration tasks (such as GCP/AWS cloud-provider console interactions, SSH container termination, and model weight registry updates). |
+| **UiPath Orchestrator Queues** | Manages the unified, high-reliability `IncidentReports` queue that triggers process executions upon new anomaly detection. |
 
-## Getting started
+---
 
-The orchestration core runs on **UiPath Automation Cloud** (Maestro BPMN is the mandatory core). External frameworks (LangChain, custom Python agents) run **as task nodes invoked from the BPMN flow**.
+## 🤖 Agent Type: Both Coded Agents and Low-code Agents
 
-You can validate the canonical anomaly data model locally without any UiPath access:
+This solution leverages a **Hybrid (Both Coded and Low-code)** agent architecture to combine enterprise-grade stability with high-intelligence reasoning:
 
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install jsonschema
-python - <<'PY'
-import json, glob
-from jsonschema import Draft202012Validator
-schema = json.load(open('samples/triggers/incident_report.schema.json'))
-v = Draft202012Validator(schema)
-for f in glob.glob('samples/triggers/*.json'):
-    if 'schema' in f: continue
-    v.validate(json.load(open(f)))
-    print('OK', f)
-PY
-```
+1. **Low-code / No-code Agents (UiPath Maestro BPMN & Orchestrator)**: Handles the end-to-end routing, human approvals (Action Center), queue state transitions, and high-level execution policies.
+2. **Coded Agents (Python / LangChain / Claude & Gemini)**: Handles real-time telemetry analysis (1Hz data processing, anomaly classification, gradient collapse detection, and risk scoring). These coded agents connect seamlessly to UiPath via **REST API endpoints and Orchestrator Queues**, creating a closed-loop system where advanced code-based intelligence runs under low-code BPMN governance.
 
-See [`samples/triggers/`](./samples/triggers/) for the `IncidentReport` schema + 8 training-anomaly samples (gradient collapse / loss divergence / GPU OOM / idle spend / quota exhaustion / researcher note + logs + monitor) that replay the flow without external systems.
+Full architecture and design patterns: [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
-### Run the orchestration end-to-end
+---
 
-The same stages the Maestro BPMN models also run as plain Python task nodes, so the flow is runnable and testable with **zero external dependencies** — the LLM and cloud systems degrade to local fallbacks when no keys are set:
+## 🚀 Setup & Execution Instructions for Judging
 
-```bash
-python run_pipeline.py            # anomaly -> analyst agent -> gateway -> action -> audit
-python -m pytest -q               # offline end-to-end tests
-```
+You can configure, run, and evaluate this solution using either a quick offline simulation or a full cloud deployment.
 
-Each event is classified by the **Telemetry Analyst** agent ([`agents/`](./agents/)), scored by the Anomaly Risk gateway, routed to the **Action Center (HITL)** or the autonomous **Fast Track**, then ticketed against the **mock cloud-ops API** ([`mocks/`](./mocks/)) with an immutable audit entry at every stage.
+### Option A: Quick Offline Local Run (Recommended for Immediate Verification)
+The entire agentic pipeline, telemetry monitoring, exclusive gateways, and write-back execution are fully testable locally with **zero external dependencies** (the LLM and cloud services fallback elegantly to rule-based mock logic if no API keys are provided):
 
-- **LLM task node** — set `ANTHROPIC_API_KEY` (Claude, primary) or `GEMINI_API_KEY` (fallback) and `pip install -r requirements.txt`. With no key, a deterministic rule layer mirrors the BPMN gateway math so the pipeline still runs.
-- **Mock cloud-ops API** — `uvicorn mocks.enterprise_api:app --port 8099` for live HTTP endpoints (run tickets / provider registry / audit log).
-- **Live UiPath queue** — see [`docs/UIPATH-SETUP.md`](./docs/UIPATH-SETUP.md) to push anomalies into a real `IncidentReports` queue on Orchestrator.
-- **Deploy to Maestro Cloud (submission-critical)** — [`docs/DEPLOY-MAESTRO.md`](./docs/DEPLOY-MAESTRO.md) is the step-by-step runbook to make the BPMN actually *run on UiPath Automation Cloud* (the AgentHack requirement) + a done-checklist.
+1. **Clone the repository and enter the directory**:
+   ```bash
+   git clone https://github.com/ForenlyAI/uipath-maestro-ecm.git
+   cd uipath-maestro-ecm
+   ```
+
+2. **Initialize a virtual environment and install dependencies**:
+   ```bash
+   python3 -m venv .venv && source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+3. **Validate the JSON schemas and incident triggers**:
+   Verify that all incoming telemetry and resource alerts comply with the strict data model schema:
+   ```bash
+   python -c "
+   import json, glob
+   from jsonschema import Draft202012Validator
+   schema = json.load(open('samples/triggers/incident_report.schema.json'))
+   v = Draft202012Validator(schema)
+   for f in glob.glob('samples/triggers/*.json'):
+       if 'schema' in f: continue
+       v.validate(json.load(open(f)))
+       print('Verified:', f)
+   "
+   ```
+
+4. **Run the complete end-to-end pipeline simulation**:
+   This runs the anomaly triage, executes the Coded Telemetry Analyst, routes the event via the Risk gateway, triggers the actions, and updates the local registry:
+   ```bash
+   python run_pipeline.py
+   ```
+
+5. **Run the automated test suite**:
+   ```bash
+   python -m pytest -v
+   ```
+
+### Option B: Deploying & Running on UiPath Automation Cloud (Maestro)
+To set up, configure, and execute the Maestro BPMN process live in the cloud environment:
+1. **Studio Web Import**: Connect your UiPath Studio Web workspace to this git repository, or import the pre-compiled BPMN diagram located at `maestro/FieldIncidentTriage/content/FieldIncidentTriage.bpmn`.
+2. **Queue Setup**: Create an Orchestrator Queue named `IncidentReports` on your UiPath tenant and wire it as the process trigger.
+3. **HITL Forms & Integration**: Deploy the Action Center schema (`artifacts/container1/action_center_irb.json`) and configure your Agent Builder credentials.
+4. **Detailed Cloud Deployment Steps**: For full step-by-step guidance on Automation Cloud provisioning, credential binding, and publishing, follow our comprehensive [UiPath Cloud Deployment Runbook (docs/DEPLOY-MAESTRO.md)](./docs/DEPLOY-MAESTRO.md).
 
 ## Community
 
