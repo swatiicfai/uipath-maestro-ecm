@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinel — Agentic Cloud-GPU Orchestrator on UiPath Maestro</title>
+  <meta name="description" content="Sentinel is an agentic cloud-GPU orchestrator and humanoid RL training lifecycle manager built on UiPath Maestro BPMN." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Animated background -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">SENTINEL</span>
+    </div>
+    <div class="nav-links">
+      <a href="#how-it-works">How It Works</a>
+      <a href="#demo">Live Demo</a>
+      <a href="#architecture">Architecture</a>
+      <a href="https://github.com/Forenly/uipath-maestro-ecm" target="_blank" class="nav-cta">GitHub →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🏆 UiPath AgentHack — Track 2: UiPath Maestro BPMN</div>
+    <h1 class="hero-title">
+      Agentic <span class="gradient-text">Cloud-GPU</span><br/>Orchestrator
+    </h1>
+    <p class="hero-subtitle">
+      An autonomous humanoid RL training fleet manager built end-to-end on <strong>UiPath Maestro BPMN</strong>. 
+      AI agents analyze anomalies, humans approve critical gates, RPA robots execute — all governed by BPMN.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">8</span>
+        <span class="stat-label">BPMN Process Containers</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">AI Agents</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">9</span>
+        <span class="stat-label">BPMN Swimlane Roles</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">$48K</span>
+        <span class="stat-label">Grand Prize Pool</span>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#demo" class="btn-primary">▶ Run Live Demo</a>
+      <a href="https://github.com/Forenly/uipath-maestro-ecm" target="_blank" class="btn-secondary">View on GitHub</a>
+    </div>
+  </section>
+
+  <!-- PROBLEM STATEMENT -->
+  <section class="problem-section" id="how-it-works">
+    <div class="section-label">THE PROBLEM</div>
+    <h2 class="section-title">Humanoid RL Training is <span class="gradient-text">Chaos</span></h2>
+    <div class="problem-cards">
+      <div class="problem-card">
+        <div class="problem-icon">💸</div>
+        <h3>Idle GPU Waste</h3>
+        <p>Teams burn thousands of dollars on cloud GPU instances (AWS, GCP, AMD) that sit completely idle after training finishes.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📉</div>
+        <h3>Silent Divergence</h3>
+        <p>RL runs silently diverge or collapse for hours — reward flatlines, gradients vanish — before anyone notices.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🤖</div>
+        <h3>No Governance</h3>
+        <p>No unified system for anomaly triage, human-in-the-loop approvals, and auditable write-back to cloud registries.</p>
+      </div>
+    </div>
+    <div class="solution-banner">
+      <span class="solution-label">SENTINEL SOLVES THIS</span>
+      <p>One BPMN process. AI agents detect. Humans approve. RPA robots execute. Every decision is audited.</p>
+    </div>
+  </section>
+
+  <!-- BPMN FLOW VISUALIZATION -->
+  <section class="flow-section">
+    <div class="section-label">THE ARCHITECTURE</div>
+    <h2 class="section-title" id="architecture">BPMN <span class="gradient-text">Orchestration Flow</span></h2>
+    <div class="bpmn-flow">
+
+      <div class="flow-node start-node">
+        <div class="node-icon">📡</div>
+        <div class="node-title">Incident Trigger</div>
+        <div class="node-sub">IncidentReports Queue</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-node agent-node">
+        <div class="node-icon">🧠</div>
+        <div class="node-title">Telemetry Analyst</div>
+        <div class="node-sub">AI Agent (Claude/Gemini)</div>
+        <div class="node-badge agent-badge">AI AGENT</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-node gateway-node">
+        <div class="node-icon">◈</div>
+        <div class="node-title">HITL Required?</div>
+        <div class="node-sub">Exclusive Gateway</div>
+        <div class="node-badge gateway-badge">GATEWAY</div>
+      </div>
+
+      <div class="flow-split">
+        <div class="split-path hitl-path">
+          <div class="path-label danger">HIGH RISK → HITL</div>
+          <div class="flow-node hitl-node">
+            <div class="node-icon">👨‍💼</div>
+            <div class="node-title">Review Board</div>
+            <div class="node-sub">Action Center (Human)</div>
+            <div class="node-badge hitl-badge">HUMAN GATE</div>
+          </div>
+        </div>
+        <div class="split-path fast-path">
+          <div class="path-label success">LOW RISK → AUTO</div>
+          <div class="flow-node fast-node">
+            <div class="node-icon">⚡</div>
+            <div class="node-title">Fast Track</div>
+            <div class="node-sub">Autonomous Remediation</div>
+            <div class="node-badge fast-badge">AUTO</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow merge-arrow">→</div>
+
+      <div class="flow-node rpa-node">
+        <div class="node-icon">🤖</div>
+        <div class="node-title">RPA Write-Back</div>
+        <div class="node-sub">Cloud Console / Registry</div>
+        <div class="node-badge rpa-badge">RPA ROBOT</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-node audit-node">
+        <div class="node-icon">📋</div>
+        <div class="node-title">Audit Log</div>
+        <div class="node-sub">Immutable Trace</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIVE DEMO -->
+  <section class="demo-section" id="demo">
+    <div class="section-label">LIVE SIMULATION</div>
+    <h2 class="section-title">Watch <span class="gradient-text">Sentinel</span> in Action</h2>
+    <p class="demo-subtitle">Click "Run Pipeline" to simulate 8 real training anomalies being triaged by AI agents</p>
+
+    <div class="demo-container">
+      <div class="demo-controls">
+        <button class="run-btn" id="runBtn" onclick="runDemo()">
+          <span id="btnIcon">▶</span> <span id="btnText">Run Pipeline Simulation</span>
+        </button>
+        <button class="clear-btn" onclick="clearDemo()">✕ Clear</button>
+        <div class="demo-stats-row">
+          <span class="ds" id="ds-total">Processed: <strong>0</strong></span>
+          <span class="ds" id="ds-hitl">HITL: <strong class="danger">0</strong></span>
+          <span class="ds" id="ds-auto">Auto: <strong class="success">0</strong></span>
+        </div>
+      </div>
+
+      <div class="terminal" id="terminal">
+        <div class="terminal-header">
+          <span class="t-dot red"></span><span class="t-dot yellow"></span><span class="t-dot green"></span>
+          <span class="t-title">sentinel@uipath-maestro-ecm ~ python run_pipeline.py</span>
+        </div>
+        <div class="terminal-body" id="terminalBody">
+          <div class="t-line muted">$ Waiting for pipeline to start...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="tech-section">
+    <div class="section-label">BUILT WITH</div>
+    <h2 class="section-title">UiPath <span class="gradient-text">Full Stack</span></h2>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-logo">🔷</div>
+        <div class="tech-name">UiPath Maestro BPMN</div>
+        <div class="tech-desc">Primary orchestration engine. Models the full 8-container training lifecycle.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🤖</div>
+        <div class="tech-name">UiPath Agent Builder</div>
+        <div class="tech-desc">Coordinates Telemetry Analyst, Risk Agent, and Cost Agent with structured prompts.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">👥</div>
+        <div class="tech-name">UiPath Action Center</div>
+        <div class="tech-desc">Renders rich HITL forms for researchers to approve/reject anomaly remediation.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🦾</div>
+        <div class="tech-name">UiPath RPA Robots</div>
+        <div class="tech-desc">Executes cloud-console interactions, SSH termination, and model registry updates.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">📬</div>
+        <div class="tech-name">Orchestrator Queues</div>
+        <div class="tech-desc">High-reliability IncidentReports queue triggers process executions on new anomalies.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🧠</div>
+        <div class="tech-name">Claude + Gemini APIs</div>
+        <div class="tech-desc">Powers the coded AI agents for real-time telemetry analysis and risk scoring.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <div class="section-label">THE TEAM</div>
+    <h2 class="section-title">Built by <span class="gradient-text">Forenly AI</span></h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">DM</div>
+        <div class="team-name">Diya Majee</div>
+        <div class="team-role">Lead Architect & UiPath Maestro</div>
+      </div>
+      <div class="team-card highlight-card">
+        <div class="team-avatar sg-avatar">SG</div>
+        <div class="team-name">Swati Gupta</div>
+        <div class="team-role">AI Agent Integration & Queue Consumer</div>
+        <div class="team-contrib">Wired Claude/Gemini APIs · Built Orchestrator queue consumer · CRM integration · Test coverage</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">DL</div>
+        <div class="team-name">Dundu Lawan</div>
+        <div class="team-role">Trigger Samples & Environment Setup</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">SJ</div>
+        <div class="team-name">Soujanya</div>
+        <div class="team-role">Devpost & Architecture Docs</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">⚡ SENTINEL</div>
+    <p class="footer-sub">Agentic Cloud-GPU Orchestrator on UiPath Maestro · UiPath AgentHack 2026</p>
+    <div class="footer-links">
+      <a href="https://github.com/Forenly/uipath-maestro-ecm" target="_blank">GitHub</a>
+      <a href="https://devpost.com/software/sentinel-agentic-cmii-ecm-on-uipath-maestro" target="_blank">Devpost</a>
+      <a href="https://discord.gg/ntXbNbvN95" target="_blank">Discord</a>
+    </div>
+    <p class="footer-copy">© 2026 Forenly AI Platform · Apache 2.0 License</p>
+  </footer>
+
+  <script src="sentinel.js"></script>
+</body>
+</html>
