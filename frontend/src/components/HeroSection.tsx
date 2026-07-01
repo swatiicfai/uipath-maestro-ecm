@@ -35,7 +35,14 @@ const HeroSection: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 mb-16">
-            <a href="#demo" className="flex items-center px-8 py-4 bg-uipath-orange text-white rounded-full font-bold text-lg hover:bg-orange-600 transition shadow-[0_0_20px_rgba(250,70,22,0.4)]">
+            <a 
+              href="#demo" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="flex items-center px-8 py-4 bg-uipath-orange text-white rounded-full font-bold text-lg hover:bg-orange-600 transition shadow-[0_0_20px_rgba(250,70,22,0.4)]"
+            >
               <Play className="w-5 h-5 mr-2" fill="currentColor" />
               Run Live Demo
             </a>
