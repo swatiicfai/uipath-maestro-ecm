@@ -24,7 +24,7 @@
     </div>
     <div class="nav-links">
       <a href="#how-it-works">How It Works</a>
-      <a href="#demo">Live Demo</a>
+      <a href="#demo" onclick="event.preventDefault();document.getElementById('demo').scrollIntoView({behavior:'smooth'});">Live Demo</a>
       <a href="#architecture">Architecture</a>
       <a href="https://github.com/Forenly/uipath-maestro-ecm" target="_blank" class="nav-cta">GitHub →</a>
     </div>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="hero-actions">
-      <a href="#demo" class="btn-primary">▶ Run Live Demo</a>
+      <a href="#demo" onclick="event.preventDefault();document.getElementById('demo').scrollIntoView({behavior:'smooth'});" class="btn-primary">▶ Run Live Demo</a>
       <a href="https://github.com/Forenly/uipath-maestro-ecm" target="_blank" class="btn-secondary">View on GitHub</a>
     </div>
   </section>

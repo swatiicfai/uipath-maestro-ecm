@@ -19,7 +19,7 @@
   --mono: 'JetBrains Mono', monospace;
 }
 
-html { /* Removed smooth scroll to prevent Chrome lockup */ }
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font);
@@ -59,11 +59,8 @@ body {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 1rem 4rem;
-  background: rgba(5,8,22,0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transform: translateZ(0); /* Fixes Chrome black screen bug */
-  -webkit-transform: translateZ(0);
+  /* No backdrop-filter — it crashes Chrome GPU compositor on anchor navigation */
+  background: rgba(5, 8, 22, 0.95);
   border-bottom: 1px solid var(--border);
 }
 
